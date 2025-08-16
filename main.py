@@ -15,7 +15,7 @@ levelAddress = 0x4AE300
 sectionAddress = 0x4ACD8A
 sakuraStageAddress = 0x4AE331
 
-def getModName(value):
+def getModName(value):  # technically Big Master is the only one that being used. but if you modify 0x4AE32C, you can do weird stuff like 20G Shirase(?) and Big Sakura
     match value:
         case 1:
             return '20G'
@@ -25,6 +25,7 @@ def getModName(value):
             return 'TLS'
         case _:
             return ''
+
 def getModeName(value):
     match value:
         case 1:
@@ -80,23 +81,27 @@ while True:
             level = process.read_process_memory(levelAddress, int, 2)
             section = process.read_process_memory(sectionAddress, int, 2)
 
-            state = "Level " + str(level) + " / " + str((section + 1) * 100)
+            state = getModeName(modeValue)
 
             if modeValue == 64:
                 sakuraLevelValue = process.read_process_memory(sakuraStageAddress, int, 2)
-                state = state + " (Stage " + str(getSakuraStage(sakuraLevelValue)) + ")"
+                state = "Stage " + str(getSakuraStage(sakuraLevelValue))
             if modeValue == 258:
                 state = 'Chilling'
 
             RPC.update(
                 state = state,
+                party_size = [level, (section + 1) * 100],
                 details = getModName(modValue) + " " + getModeName(modeValue),
                 small_image = getModeKey(modeValue),
                 large_image = 'logo',
             )
     except:
-        if isGameDetected != -1:
-            print('Cannot detect game.exe. Please open the game')
+        if isGameDetected == 0:
+            print('An error occured. Did you open game.exe?')
+            isGameDetected = -1
+        elif isGameDetected == 1:
+            print('game.exe closed')
             isGameDetected = -1
     time.sleep(0.5)
 
