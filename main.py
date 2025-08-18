@@ -40,6 +40,10 @@ def getModeName(value):
             return 'Promotional Exam'
         case 4098:
             return 'Demotional Exam'
+        case 16386:
+            return 'Versus'
+        case 16416:
+            return 'Shirase Versus'
         case 258:
             return 'Attract Screen'
         case _:
@@ -69,6 +73,16 @@ def getSakuraStage(value):
         return "EX" + str(stage - 20)
     return stage
 
+def getBackground(mode, section):
+    match mode:
+        case 1:
+            return min(100, section * 100)
+        case 16386:
+            return 1000
+        case 16416:
+            return 1000
+        case _:
+            return min(900, section * 100)
 while True:
     try:
         with OpenProcess(process_name = "game.exe") as process:
@@ -90,11 +104,9 @@ while True:
                 state = 'Chilling'
 
             RPC.update(
-                state = state,
-                party_size = [level, (section + 1) * 100],
                 details = getModName(modValue) + " " + getModeName(modeValue),
                 small_image = getModeKey(modeValue),
-                large_image = 'logo',
+                large_image = str(getBackground(modeValue, section)) + 's',
             )
     except:
         if isGameDetected == 0:
