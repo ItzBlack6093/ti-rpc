@@ -100,8 +100,6 @@ while True:
             if modeValue == 64:
                 sakuraLevelValue = process.read_process_memory(sakuraStageAddress, int, 2)
                 state = "Stage " + str(getSakuraStage(sakuraLevelValue))
-            if modeValue == 258:
-                state = 'Chilling'
 
             RPC.update(
                 details = getModName(modValue) + " " + getModeName(modeValue),
