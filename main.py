@@ -14,6 +14,7 @@ modAddress = 0x4AE32C
 levelAddress = 0x4AE300
 sectionAddress = 0x4ACD8A
 sakuraStageAddress = 0x4AE331
+framesAddress = 0x4AE33C
 
 def getModName(value):  # technically Big Master is the only one that being used. but if you modify 0x4AE32C, you can do weird stuff like 20G Shirase(?) and Big Sakura
     match value:
@@ -94,14 +95,18 @@ while True:
             modValue =  process.read_process_memory(modAddress, int, 2)
             level = process.read_process_memory(levelAddress, int, 2)
             section = process.read_process_memory(sectionAddress, int, 2)
+            frames = process.read_process_memory(framesAddress, int, 2)
 
-            state = getModeName(modeValue)
+            state = 'Playing'
 
             if modeValue == 64:
                 sakuraLevelValue = process.read_process_memory(sakuraStageAddress, int, 2)
                 state = "Stage " + str(getSakuraStage(sakuraLevelValue))
+            if frames == 0 or modeValue == 258: # attract mode shouldn't count as 'play'
+                state = 'Not playing'
 
             RPC.update(
+                state = state,
                 details = getModName(modValue) + " " + getModeName(modeValue),
                 small_image = getModeKey(modeValue),
                 large_image = str(getBackground(modeValue, section)) + 's',
