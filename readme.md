@@ -1,5 +1,5 @@
 # Terror-Instinct Rich Presence (TI-RPC)
-This simple Python script allow you to show off what are you doing in TGM3.
+This simple Python script allow you to show off what are you (or should I say... what P1) doing in TGM3.
 ## Supported Gamemode
 
 + Easy
@@ -7,7 +7,8 @@ This simple Python script allow you to show off what are you doing in TGM3.
 + Shirase
 + Sakura
 + Exam Games (both Promotional and Demotional)
++ Versus
 
 ## TODO
-+ Versus Mode
+idk
 
