@@ -1,0 +1,33 @@
+name: Build Executable
+
+on:
+    push:
+        paths:
+            - main.py
+            - .github/workflows/main.yaml
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+                uses: actions/checkout@v3
+
+            - name: Set up Python
+                uses: actions/setup-python@v4
+                with:
+                    python-version: '3.x'
+
+            - name: Install PyInstaller
+                run: pip install pyinstaller
+
+            - name: Build executable
+                run: pyinstaller --onefile main.py
+
+            - name: Upload executable
+                uses: actions/upload-artifact@v3
+                with:
+                    name: main-executable
+                    path: dist/main
