@@ -21,9 +21,10 @@ jobs:
               python-version: '3.11.9'
 
           - name: Install libraries
-            run: pip install pyinstaller
-                 pip install PyMemoryEditor
-                 pip install pypresence
+            run: |
+                pip install pyinstaller
+                pip install PyMemoryEditor
+                pip install pypresence
 
           - name: Build executable
             run: pyinstaller --onefile main.py
