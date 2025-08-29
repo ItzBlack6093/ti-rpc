@@ -20,8 +20,10 @@ jobs:
             with:
               python-version: '3.x'
 
-          - name: Install PyInstaller
+          - name: Install libraries
             run: pip install pyinstaller
+                 pip install PyMemoryEditor
+                 pip install pypresence
 
           - name: Build executable
             run: pyinstaller --onefile main.py
@@ -29,5 +31,5 @@ jobs:
           - name: Upload executable
             uses: actions/upload-artifact@v4
             with:
-              name: main-executable
+              name: tirpc
               path: dist/main
